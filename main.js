@@ -30,6 +30,9 @@ module.exports.loop = function () {
     var builder = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'builder';
     })
+    var upGrader = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'upgrader';
+    })
 
     //如果harvester数量小于2，重新创建一个harvester
     for(var name in Memory.creeps){
@@ -47,16 +50,23 @@ module.exports.loop = function () {
     }
 
     if (builder.length < 2){
-        var name = 'harvester'+Game.time;
-        console.log('create new harvester'+name);
+        var name = 'builder'+Game.time;
+        console.log('create new builder'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
             memory: {role: 'builder'}
+        });
+    }
+    if (upGrader.length < 2){
+        var name = 'upgrader'+Game.time;
+        console.log('create new grader'+name);
+        Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
+            memory: {role: 'upgrader'}
         });
     }
 
 
     if(Game.spawns['Earth'].spawning) {
-        var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
+        var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
         Game.spawns['Earth'].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
             Game.spawns['Earth'].pos.x + 1,
