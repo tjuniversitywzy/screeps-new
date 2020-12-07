@@ -49,7 +49,7 @@ module.exports.loop = function () {
         });
     }
 
-    if (builder.length < 2){
+    if (builder.length < 4){
         var name = 'builder'+Game.time;
         console.log('create new builder'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
