@@ -1,6 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleCarrier = require('role.carrier');
 
 module.exports.loop = function () {
 
@@ -16,7 +17,7 @@ module.exports.loop = function () {
     }
 
     //塔，自动攻击
-    
+
     if(tower) {
         var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if(closestHostile) {
@@ -33,6 +34,9 @@ module.exports.loop = function () {
     var upGrader = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'upgrader';
     })
+    var carrier = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'carrier';
+    })
 
     //如果harvester数量小于2，重新创建一个harvester
     for(var name in Memory.creeps){
@@ -41,7 +45,7 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-    if (harvester.length < 2){
+    if (harvester.length < 3){
         var name = 'harvester'+Game.time;
         console.log('create new harvester'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
@@ -56,14 +60,20 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 2){
+    if (upGrader.length < 3){
         var name = 'upgrader'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
             memory: {role: 'upgrader'}
         });
     }
-
+    // if (carrier.length < 1){
+    //     var name = 'carrier'+Game.time;
+    //     console.log('create new grader'+name);
+    //     Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
+    //         memory: {role: 'carrier'}
+    //     });
+    // }
 
     if(Game.spawns['Earth'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
@@ -82,6 +92,8 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         }else if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
+        }else if (creep.memory.role == 'carrier'){
+            roleCarrier.run(creep);
         }
 
     }

@@ -6,7 +6,7 @@
  * var mod = require('role.builder');
  * mod.thing == 'a thing'; // true
  */
-
+//建造者、修理工
 var roleBuilder = {
 
     /** @param {Creep} creep **/
@@ -18,17 +18,27 @@ var roleBuilder = {
         }
         if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
             creep.memory.building = true;
-            creep.say('🚧 build');
+            creep.say('🚧 build & repair');
         }
 
         if(creep.memory.building) {
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
+            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);//建造物
+            var neededRepairContainers = creep.room.find(FIND_STRUCTURES,{
+                filter: function(structure){
+                    return structure.hits < structure.hitsMax && structure.structureType == 'container';
+                }
+            });//
+            // console.log(neededRepairBuildings.length);
+            // creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
             if(targets.length) {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
-            }else{
+            }else if (neededRepairContainers.length){
+                if (creep.repair(neededRepairContainers[0]) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(neededRepairContainers[0], {visualizePathStyle: {stroke: '#ffffff'}})
+                }
+            } else{
                 creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
