@@ -45,7 +45,7 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
-    if (harvester.length < 3){
+    if (harvester.length < 2){//这里要改
         var name = 'harvester'+Game.time;
         console.log('create new harvester'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
@@ -60,7 +60,7 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 3){
+    if (upGrader.length < 2){
         var name = 'upgrader'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
