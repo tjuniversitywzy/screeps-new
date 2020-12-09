@@ -13,18 +13,21 @@ var roleCarrier = {
         });//存储单位
 
         if (creep.store.getFreeCapacity() > 0){
-            if (container1.store.getUsedCapacity > 0){
-                if (creep.withdraw(container1) == 'ERR_NOT_IN_RANGE'){
+
+            if (container1.store[RESOURCE_ENERGY] > 0){
+
+                if (creep.withdraw(container1,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(container1);
                 }
-            }else if (container2.store.getUsedCapacity > 0){
-                if (creep.withdraw(container2) == 'ERR_NOT_IN_RANGE'){
+            }else if (container2.store[RESOURCE_ENERGY] > 0){
+                if (creep.withdraw(container2,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(container2);
                 }
             }else {
                 creep.moveTo(Game.flags.Flag1);
             }
         }else{
+            console.log(2);
             if(targets.length > 0) {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffaa00'}});
