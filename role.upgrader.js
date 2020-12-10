@@ -13,11 +13,11 @@ var roleUpgrader = {
         var container3 = Game.getObjectById('5fce7bcbf0ce50b8f199afff');//一个目标container
         if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.upgrading = false;
-            creep.say('🔄 harvest');
+            creep.say('🔄 收集能量');
         }
         if (!creep.memory.upgrading && creep.store.getFreeCapacity() == 0) {
             creep.memory.upgrading = true;
-            creep.say('⚡ upgrade');
+            creep.say('⚡ 升级控制器');
         }
 
         if (creep.memory.upgrading) {

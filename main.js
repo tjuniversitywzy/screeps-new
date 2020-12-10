@@ -93,7 +93,7 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 3){
+    if (upGrader.length < 4){
         var name = 'upgrader'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
