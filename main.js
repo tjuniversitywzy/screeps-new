@@ -71,7 +71,7 @@ module.exports.loop = function () {
             memory: {role: 'harvester2'}
         });
     }
-    if (carrier1.length < 1){
+    if (carrier1.length < 2){
         var name = 'carrierOne'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
