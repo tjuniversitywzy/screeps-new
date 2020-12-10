@@ -27,14 +27,13 @@ var roleCarrier = {
                 creep.moveTo(Game.flags.Flag1);
             }
         }else{
-            console.log(2);
             if(targets.length > 0) {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
-            }else if (creep.transfer(container3) == 'ERR_NOT_IN_RANGE'){
+            }else if (creep.transfer(container3,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(container3);
-            }else if (creep.transfer(container3) == 'ERR_FULL'){
+            }else if (creep.transfer(container3,RESOURCE_ENERGY) == ERR_FULL){
                 creep.moveTo(Game.flags.FlagCarrier);
             }
         }

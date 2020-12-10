@@ -70,7 +70,7 @@ module.exports.loop = function () {
         });
     }
 
-    if (carrier.length < 1){
+    if (carrier.length < 2){
         var name = 'carrier'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
@@ -85,10 +85,10 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 1){
+    if (upGrader.length < 2){
         var name = 'upgrader'+Game.time;
         console.log('create new grader'+name);
-        Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
             memory: {role: 'upgrader'}
         });
     }
