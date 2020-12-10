@@ -11,8 +11,16 @@ var roleCarrier1 = {
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
             }
         });//存储单位
+        // console.log(creep.carrying && creep.store[RESOURCE_ENERGY] == 0);
+        if(creep.memory.carrying && creep.store[RESOURCE_ENERGY] == 0){
+            creep.memory.carrying = false;
+            creep.say("开始寻找能源");
+        }else if (!creep.memory.carrying && creep.store.getFreeCapacity() == 0){
+            creep.memory.carrying = true;
+            creep.say("开始运送能源");
+        }
 
-        if (creep.store.getFreeCapacity() > 0){
+        if (!creep.memory.carrying){
             if (container1.store[RESOURCE_ENERGY] > 0){
                 if (creep.withdraw(container1,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(container1);
