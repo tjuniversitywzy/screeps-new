@@ -1,5 +1,5 @@
 //负责把container的能量搬运到：1.另一个container 2.spawns 3.
-var roleCarrier = {
+var roleCarrier1 = {
     run: function (creep) {
         var container1 = Game.getObjectById('5fd0d52e83f4c657b6dbc698');//左边的
         var container2 = Game.getObjectById('5fce552fb8260bcfedbbe9c6');//下边的
@@ -13,9 +13,7 @@ var roleCarrier = {
         });//存储单位
 
         if (creep.store.getFreeCapacity() > 0){
-
             if (container1.store[RESOURCE_ENERGY] > 0){
-
                 if (creep.withdraw(container1,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(container1);
                 }
@@ -40,4 +38,4 @@ var roleCarrier = {
 
     }
 }
-module.exports = roleCarrier;
+module.exports = roleCarrier1;

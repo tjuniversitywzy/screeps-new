@@ -1,7 +1,8 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var roleCarrier = require('role.carrier');
+var roleCarrier1 = require('role.carrier1');
+var roleCarrier2 = require('role.carrier2');
 var roleHarvester1 = require('role.harvester1');
 var roleHarvester2 = require('role.harvester2');
 
@@ -27,9 +28,7 @@ module.exports.loop = function () {
         }
     }
 
-    var harvester = _.filter(Game.creeps,function (creep) {
-        return creep.memory.role == 'harvester';
-    })
+
     var builder = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'builder';
     })
@@ -42,8 +41,11 @@ module.exports.loop = function () {
     var harvester2 = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'harvester2';
     })
-    var carrier = _.filter(Game.creeps,function (creep) {
-        return creep.memory.role == 'carrier';
+    var carrier1 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'carrier1';
+    })
+    var carrier2 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'carrier2';
     })
 
     //如果harvester数量小于2，重新创建一个harvester
@@ -69,34 +71,33 @@ module.exports.loop = function () {
             memory: {role: 'harvester2'}
         });
     }
-
-    if (carrier.length < 2){
-        var name = 'carrier'+Game.time;
+    if (carrier1.length < 1){
+        var name = 'carrierOne'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
-            memory: {role: 'carrier'}
+            memory: {role: 'carrier1'}
+        });
+    }
+    if (carrier2.length < 2){
+        var name = 'carrierTwo'+Game.time;
+        console.log('create new grader'+name);
+        Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'carrier2'}
         });
     }
 
     if (builder.length < 1){
         var name = 'builder'+Game.time;
         console.log('create new builder'+name);
-        Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 2){
+    if (upGrader.length < 3){
         var name = 'upgrader'+Game.time;
         console.log('create new grader'+name);
-        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
             memory: {role: 'upgrader'}
-        });
-    }
-    if (harvester.length < 1){//这里要改
-        var name = 'harvester'+Game.time;
-        console.log('create new harvester'+name);
-        Game.spawns['Earth'].spawnCreep([WORK,CARRY,MOVE],name,{
-            memory: {role: 'harvester'}
         });
     }
 
@@ -118,12 +119,14 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         }else if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
-        }else if (creep.memory.role == 'carrier'){
-            roleCarrier.run(creep);
+        }else if (creep.memory.role == 'carrier' || creep.memory.role == 'carrier1'){
+            roleCarrier1.run(creep);
         }else if(creep.memory.role == 'harvester1'){
             roleHarvester1.run(creep);
         }else if(creep.memory.role == 'harvester2'){
             roleHarvester2.run(creep);
+        }else if (creep.memory.role == 'carrier2'){
+            roleCarrier2.run(creep);
         }
 
     }
