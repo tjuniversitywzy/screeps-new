@@ -12,14 +12,14 @@ module.exports.loop = function () {
 
     //塔，修复墙壁
     var tower = Game.getObjectById('5fd339d698c2cb1d46dbe49f');
-    if(tower){
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-        filter: (structure) => structure.hits < structure.hitsMax
-        });
-        if(closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
-    }
+    // if(tower){
+    //     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+    //     filter: (structure) => structure.hits < structure.hitsMax
+    //     });
+    //     if(closestDamagedStructure) {
+    //         tower.repair(closestDamagedStructure);
+    //     }
+    // }
 
     //塔，自动攻击
 
@@ -85,12 +85,12 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 4){
+    if (upGrader.length < 3){
         var name = 'upgrader'+Game.time;
         console.log('create new '+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
             memory: {role: 'upgrader'}
-        });
+        });//800
     }
     if (carrierMine1ToStorage.length < 1){
         var name = 'carrierMine1ToStorage'+Game.time;
@@ -106,7 +106,7 @@ module.exports.loop = function () {
             memory: {role: 'Mine2ToStorage'}
         });
     }
-    if (carrierStorageToUpgrader.length < 2){
+    if (carrierStorageToUpgrader.length < 1){
         var name = 'carrierStorageToUpgrader'+Game.time;
         console.log('create new grader'+name);
         Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
