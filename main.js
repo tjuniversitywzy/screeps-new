@@ -5,6 +5,7 @@ var roleCarrier1 = require('role.carrier1');
 var roleCarrier2 = require('role.carrier2');
 var roleHarvester1 = require('role.harvester1');
 var roleHarvester2 = require('role.harvester2');
+var defender = require('role.defender');
 
 module.exports.loop = function () {
 
@@ -78,6 +79,7 @@ module.exports.loop = function () {
             memory: {role: 'carrier1'}
         });
     }
+
     if (carrier2.length < 2){
         var name = 'carrierTwo'+Game.time;
         console.log('create new grader'+name);
@@ -86,7 +88,7 @@ module.exports.loop = function () {
         });
     }
 
-    if (builder.length < 1){
+    if (builder.length < 2){
         var name = 'builder'+Game.time;
         console.log('create new builder'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
@@ -127,6 +129,8 @@ module.exports.loop = function () {
             roleHarvester2.run(creep);
         }else if (creep.memory.role == 'carrier2'){
             roleCarrier2.run(creep);
+        }else if (creep.memory.role == 'defender'){
+            defender.run(creep);
         }
 
     }
