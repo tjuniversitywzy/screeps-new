@@ -11,11 +11,10 @@ var roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        var container1 = Game.getObjectById('5fd0d52e83f4c657b6dbc698');//左边的
-        var container2 = Game.getObjectById('5fce552fb8260bcfedbbe9c6');//下边的
+        var storage = Game.getObjectById('5fd3221dd535200770e51e33');//存储器
         if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.building = false;
-            creep.say('🔄 harvest');
+            creep.say('🔄 收集能源');
         }
         if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
             creep.memory.building = true;
@@ -61,14 +60,9 @@ var roleBuilder = {
                     creep.moveTo(dropedSources[0]);
                 }//先捡起来掉落的资源
             }
-            else if (container1.store[RESOURCE_ENERGY] > 0){
-                if (creep.withdraw(container1,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(container1);
-                }
-            }//从container1拿
-            else if (container2.store[RESOURCE_ENERGY] > 0){
-                if (creep.withdraw(container2,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(container2);
+            else if (storage.store[RESOURCE_ENERGY] > 0){
+                if (creep.withdraw(storage,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(storage);
                 }
             }
             else if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
