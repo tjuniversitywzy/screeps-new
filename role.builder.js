@@ -23,9 +23,9 @@ var roleBuilder = {
 
         if(creep.memory.building) {
             var targets = creep.room.find(FIND_CONSTRUCTION_SITES);//建造物
-            var neededRepairContainers = creep.room.find(FIND_STRUCTURES,{
+            var neededRepairContainersAndRampart = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
-                    return structure.hits < structure.hitsMax && structure.structureType == 'container';
+                    return structure.hits < structure.hitsMax && (structure.structureType == 'container' || structure.structureType == 'rampart');
                 }
             });//
             var neededRepairRoad = creep.room.find(FIND_STRUCTURES,{
@@ -40,9 +40,9 @@ var roleBuilder = {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
-            }else if (neededRepairContainers.length){
-                if (creep.repair(neededRepairContainers[0]) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(neededRepairContainers[0], {visualizePathStyle: {stroke: '#ffffff'}})
+            }else if (neededRepairContainersAndRampart.length){
+                if (creep.repair(neededRepairContainersAndRampart[0]) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(neededRepairContainersAndRampart[0], {visualizePathStyle: {stroke: '#ffffff'}})
                 }
             }else if (neededRepairRoad.length){
                 if (creep.repair(neededRepairRoad[0]) == ERR_NOT_IN_RANGE){
