@@ -7,61 +7,52 @@
  * mod.thing == 'a thing'; // true
  */
 //建造者、修理工
-var roleBuilder = {
+var roleWallRepairer = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        var storage = Game.getObjectById('5fd3221dd535200770e51e33');//存储器
         if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.building = false;
             creep.say('🔄 收集能源');
         }
         if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
             creep.memory.building = true;
-            creep.say('🚧 build & repair');
+            creep.say('🚧 repairWall');
         }
 
         if(creep.memory.building) {
-            var targets = creep.room.find(FIND_CONSTRUCTION_SITES);//建造物
-            var neededRepairContainers = creep.room.find(FIND_STRUCTURES,{
-                filter: function(structure){
-                    return structure.hits < structure.hitsMax && structure.structureType == 'container';
-                }
-            });//
+
             var neededRepairRampart = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
-                    return structure.hits/structure.hitsMax < 0.4 && structure.structureType == 'rampart';
+                    return structure.hits/structure.hitsMax < 0.2 && structure.structureType == 'rampart';
                 }
             });//
-            var neededRepairRoad = creep.room.find(FIND_STRUCTURES,{
-                filter: function(structure){
-                    return structure.hits < structure.hitsMax && structure.structureType == 'road';
-                }
-            });//
-
+            var neededRepairWalls = [Game.getObjectById('5fd4752d1908a31a9f7a3c95'),
+                Game.getObjectById('5fd475315482f6d42c27e253'),
+                Game.getObjectById('5fd475a4dda0ff20aa506ddd'),
+                Game.getObjectById('5fd475ce453ff5460c64ea4d'),
+                Game.getObjectById('5fd4753c8354bd1d47063f66'),
+                Game.getObjectById('5fd4754801793240ce369862')]
+            var firstRepaired = _.filter(neededRepairWalls,function (wall) {
+                return wall.hits/wall.hitsMax < 0.0025;
+            });
             // console.log(neededRepairBuildings.length);
             // creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
-            if(targets.length) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+            if (firstRepaired.length){
+                if (creep.repair(firstRepaired[0]) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(firstRepaired[0], {visualizePathStyle: {stroke: '#ffffff'}})
                 }
-            }else if (neededRepairContainers.length){
-                if (creep.repair(neededRepairContainers[0]) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(neededRepairContainers[0], {visualizePathStyle: {stroke: '#ffffff'}})
-                }
-            }else if (neededRepairRampart.length){
+            }else  if (neededRepairRampart.length){
                 if (creep.repair(neededRepairRampart[0]) == ERR_NOT_IN_RANGE){
                     creep.moveTo(neededRepairRampart[0], {visualizePathStyle: {stroke: '#ffffff'}})
                 }
-            } else if (neededRepairRoad.length){
-                if (creep.repair(neededRepairRoad[0]) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(neededRepairRoad[0], {visualizePathStyle: {stroke: '#ffffff'}})
-                }
-            } else{
+            }
+            else{
                 creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
         else {
+            var storage = Game.getObjectById('5fd3221dd535200770e51e33');//存储器
             var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
                 filter: function(resource){
                     return resource.amount > 150;
@@ -84,4 +75,4 @@ var roleBuilder = {
     }
 };
 
-module.exports = roleBuilder;
+module.exports = roleWallRepairer;

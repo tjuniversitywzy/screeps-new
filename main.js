@@ -7,6 +7,7 @@ var defender = require('role.defender');
 var Mine1ToStorage = require('role.carrierMine1ToStorage');
 var Mine2ToStorage = require('role.carrierMine2ToStorage');
 var StorageToUpgrader = require('role.carrierStorageToUpgrader');
+var wallRepairer = require('role.wallRepairer');
 
 module.exports.loop = function () {
 
@@ -52,6 +53,9 @@ module.exports.loop = function () {
     })
     var carrierMine2ToStorage = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'Mine2ToStorage';
+    })
+    var wallRepair = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'wallRepairer';
     })
 
     //如果harvester数量小于2，重新创建一个harvester
@@ -113,6 +117,13 @@ module.exports.loop = function () {
             memory: {role: 'StorageToUpgrader'}
         });
     }
+    if (wallRepair.length < 2){
+        var name = 'wallRepair'+Game.time;
+        console.log('create new wallRepairer'+name);
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'wallRepairer'}
+        });
+    }
 
 
     if(Game.spawns['Earth'].spawning) {
@@ -142,6 +153,8 @@ module.exports.loop = function () {
             Mine2ToStorage.run(creep);
         }else if (creep.memory.role == 'StorageToUpgrader'){
             StorageToUpgrader.run(creep);
+        }else if (creep.memory.role == 'wallRepairer'){
+            wallRepairer.run(creep);
         }
     }
 }
