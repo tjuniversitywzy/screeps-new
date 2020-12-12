@@ -62,12 +62,18 @@ var roleBuilder = {
             }
         }
         else {
+            var tombSources = creep.room.find(FIND_TOMBSTONES);
+
             var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
                 filter: function(resource){
                     return resource.amount > 150;
                 }});//捡起来掉落的资源
             var sources = creep.room.find(FIND_SOURCES);
-            if (dropedSources.length){
+            if (tombSources.length){
+                if (tombSources[0].store.getUsedCapacity() > 50 && creep.withdraw(tombSources[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(tombSources[0]);
+                }
+            } else if (dropedSources.length){
                 if (creep.pickup(dropedSources[0]) == ERR_NOT_IN_RANGE){
                     creep.moveTo(dropedSources[0]);
                 }//先捡起来掉落的资源
