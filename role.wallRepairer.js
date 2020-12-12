@@ -24,7 +24,7 @@ var roleWallRepairer = {
 
             var neededRepairRampart = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
-                    return structure.hits/structure.hitsMax < 0.2 && structure.structureType == 'rampart';
+                    return structure.hits/structure.hitsMax < 0.1 && structure.structureType == 'rampart';
                 }
             });//
             var neededRepairWalls = [Game.getObjectById('5fd4752d1908a31a9f7a3c95'),
@@ -32,7 +32,13 @@ var roleWallRepairer = {
                 Game.getObjectById('5fd475a4dda0ff20aa506ddd'),
                 Game.getObjectById('5fd475ce453ff5460c64ea4d'),
                 Game.getObjectById('5fd4753c8354bd1d47063f66'),
-                Game.getObjectById('5fd4754801793240ce369862')]
+                Game.getObjectById('5fd4754801793240ce369862'),
+                Game.getObjectById('5fd4758ebbe14ae4fa5021c2'),
+                Game.getObjectById('5fd4757f080d8c0e28d9f4ff'),
+                Game.getObjectById('5fd47578e985fa959c8cffb6'),
+                Game.getObjectById('5fd47574f730aa68e0cf0a54'),
+                Game.getObjectById('5fd475707c25771b7fef5e32'),
+            ]
             var firstRepaired = _.filter(neededRepairWalls,function (wall) {
                 return wall.hits/wall.hitsMax < 0.0025;
             });
@@ -52,6 +58,7 @@ var roleWallRepairer = {
             }
         }
         else {
+
             var storage = Game.getObjectById('5fd3221dd535200770e51e33');//存储器
             var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
                 filter: function(resource){

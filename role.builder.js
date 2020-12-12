@@ -30,7 +30,7 @@ var roleBuilder = {
             });//
             var neededRepairRampart = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
-                    return structure.hits/structure.hitsMax < 0.4 && structure.structureType == 'rampart';
+                    return structure.hits/structure.hitsMax < 0.1 && structure.structureType == 'rampart';
                 }
             });//
             var neededRepairRoad = creep.room.find(FIND_STRUCTURES,{
@@ -69,7 +69,7 @@ var roleBuilder = {
                     return resource.amount > 150;
                 }});//捡起来掉落的资源
             var sources = creep.room.find(FIND_SOURCES);
-            if (tombSources.length){
+            if (tombSources.length){//这里需要改
                 if (tombSources[0].store.getUsedCapacity() > 50 && creep.withdraw(tombSources[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(tombSources[0]);
                 }

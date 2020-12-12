@@ -89,7 +89,7 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 3){
+    if (upGrader.length < 2){
         var name = 'upgrader'+Game.time;
         console.log('create new '+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
@@ -117,7 +117,7 @@ module.exports.loop = function () {
             memory: {role: 'StorageToUpgrader'}
         });
     }
-    if (wallRepair.length < 2){
+    if (wallRepair.length < 1){
         var name = 'wallRepair'+Game.time;
         console.log('create new wallRepairer'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
