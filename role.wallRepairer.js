@@ -34,7 +34,7 @@ var roleWallRepairer = {
 
             var nomalRampart = _.filter(neededRepairRampart,
                 function (rampart) {
-                    return rampart.hits/rampart.hitsMax < 0.05;
+                    return rampart.hits/rampart.hitsMax < 0.1;
                 });
             var neededRepairWalls = [Game.getObjectById('5fd4752d1908a31a9f7a3c95'),
                 Game.getObjectById('5fd475315482f6d42c27e253'),
