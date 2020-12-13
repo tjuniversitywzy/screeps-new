@@ -75,7 +75,7 @@ var roleBuilder = {
             }
         }
         else {
-            var tombSources = creep.room.find(FIND_TOMBSTONES);
+            // var tombSources = creep.room.find(FIND_TOMBSTONES);
 
             var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
                 filter: function(resource){

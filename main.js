@@ -8,6 +8,8 @@ var Mine1ToStorage = require('role.carrierMine1ToStorage');
 var Mine2ToStorage = require('role.carrierMine2ToStorage');
 var StorageToUpgrader = require('role.carrierStorageToUpgrader');
 var wallRepairer = require('role.wallRepairer');
+var dismantler = require('role.helperE36N58');//临时拆墙的人
+var builderInE36N58 = require('role.builderInE36N58');
 
 module.exports.loop = function () {
 
@@ -56,6 +58,9 @@ module.exports.loop = function () {
     })
     var wallRepair = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'wallRepairer';
+    })
+    var builderE36N58 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'builderE36N58';
     })
 
     //如果harvester数量小于2，重新创建一个harvester
@@ -124,7 +129,13 @@ module.exports.loop = function () {
             memory: {role: 'wallRepairer'}
         });
     }
-
+    // if (builderE36N58.length < 1){
+    //     var name = 'builderE36N58'+Game.time;
+    //     console.log('create new '+name);
+    //     Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
+    //         memory: {role: 'builderInE36N58'}
+    //     });
+    // }
 
     if(Game.spawns['Earth'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
@@ -155,6 +166,10 @@ module.exports.loop = function () {
             StorageToUpgrader.run(creep);
         }else if (creep.memory.role == 'wallRepairer'){
             wallRepairer.run(creep);
+        }else if (creep.memory.role == 'dismantle'){
+            dismantler.run(creep);
+        }else if (creep.memory.role == 'builderInE36N58'){
+            builderInE36N58.run(creep);
         }
     }
 }
