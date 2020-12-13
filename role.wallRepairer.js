@@ -24,9 +24,18 @@ var roleWallRepairer = {
 
             var neededRepairRampart = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
-                    return structure.hits/structure.hitsMax < 0.1 && structure.structureType == 'rampart';
+                    return structure.structureType == 'rampart';
                 }
             });//
+            var urgencyRampart = _.filter(neededRepairRampart,
+                function (rampart) {
+                    return rampart.hits < 301;
+                });
+
+            var nomalRampart = _.filter(neededRepairRampart,
+                function (rampart) {
+                    return rampart.hits/rampart.hitsMax < 0.05;
+                });
             var neededRepairWalls = [Game.getObjectById('5fd4752d1908a31a9f7a3c95'),
                 Game.getObjectById('5fd475315482f6d42c27e253'),
                 Game.getObjectById('5fd475a4dda0ff20aa506ddd'),
@@ -44,13 +53,17 @@ var roleWallRepairer = {
             });
             // console.log(neededRepairBuildings.length);
             // creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
-            if (firstRepaired.length){
+            if (urgencyRampart.length){
+                if (creep.repair(urgencyRampart[0]) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(urgencyRampart[0], {visualizePathStyle: {stroke: '#ffffff'}})
+                }
+            } else if (firstRepaired.length){
                 if (creep.repair(firstRepaired[0]) == ERR_NOT_IN_RANGE){
                     creep.moveTo(firstRepaired[0], {visualizePathStyle: {stroke: '#ffffff'}})
                 }
-            }else  if (neededRepairRampart.length){
-                if (creep.repair(neededRepairRampart[0]) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(neededRepairRampart[0], {visualizePathStyle: {stroke: '#ffffff'}})
+            }else  if (nomalRampart.length){
+                if (creep.repair(nomalRampart[0]) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(nomalRampart[0], {visualizePathStyle: {stroke: '#ffffff'}})
                 }
             }
             else{
