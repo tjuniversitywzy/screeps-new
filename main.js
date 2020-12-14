@@ -10,19 +10,24 @@ var StorageToUpgrader = require('role.carrierStorageToUpgrader');
 var wallRepairer = require('role.wallRepairer');
 var dismantler = require('role.helperE36N58');//临时拆墙的人
 var builderInE36N58 = require('role.builderInE36N58');
+var carrierInE36N58 = require('role.carrierE36N58');
+var harvesterInE36N58 = require('role.harvesterE36N58');
+var claimerInE36N58 = require('role.claimerE36N58');
 
 module.exports.loop = function () {
 
     //塔，修复墙壁
     var tower = Game.getObjectById('5fd339d698c2cb1d46dbe49f');
-    // if(tower){
-    //     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-    //     filter: (structure) => structure.hits < structure.hitsMax
-    //     });
-    //     if(closestDamagedStructure) {
-    //         tower.repair(closestDamagedStructure);
-    //     }
-    // }
+    if(tower){
+        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: function(structure){
+                return structure.hits < structure.hitsMax && structure.structureType == 'road';
+            }
+        });
+        if(closestDamagedStructure) {
+            tower.repair(closestDamagedStructure);
+        }
+    }
 
     //塔，自动攻击
 
@@ -61,6 +66,15 @@ module.exports.loop = function () {
     })
     var builderE36N58 = _.filter(Game.creeps,function (creep) {
         return creep.memory.role == 'builderInE36N58';
+    })
+    var carrierE36N58 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'carrierE36N58';
+    })
+    var harvesterE36N58 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'harvesterE36N58';
+    })
+    var claimerE36N58 = _.filter(Game.creeps,function (creep) {
+        return creep.memory.role == 'claimerE36N58';
     })
 
     //如果harvester数量小于2，重新创建一个harvester
@@ -136,6 +150,20 @@ module.exports.loop = function () {
             memory: {role: 'builderInE36N58'}
         });
     }
+    if (harvesterE36N58.length < 1){
+        var name = 'harvesterE36N58'+Game.time;
+        console.log('create new '+name);
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'harvesterE36N58'}
+        });
+    }
+    if (carrierE36N58.length < 1){
+        var name = 'carrierE36N58'+Game.time;
+        console.log('create new '+name);
+        Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'carrierE36N58'}
+        });
+    }
 
     if(Game.spawns['Earth'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
@@ -170,6 +198,12 @@ module.exports.loop = function () {
             dismantler.run(creep);
         }else if (creep.memory.role == 'builderInE36N58'){
             builderInE36N58.run(creep);
+        }else if (creep.memory.role == 'carrierE36N58'){
+            carrierInE36N58.run(creep);
+        }else if (creep.memory.role == 'harvesterE36N58'){
+            harvesterInE36N58.run(creep);
+        }else if (creep.memory.role == 'claimerE36N58'){
+            claimerInE36N58.run(creep);
         }
     }
 }

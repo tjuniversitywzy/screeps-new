@@ -16,7 +16,7 @@ var builderInE36N58 = {//负责去E36N58建造
 
         if(creep.memory.building) {
             // creep.say("111");
-            if (!roomE36N58){
+            if (!roomE36N58 || creep.room.name != 'E36N58'){
                 creep.moveTo(new RoomPosition(48,10,'E36N58'));
             }else {
                 var targets = creep.room.find(FIND_CONSTRUCTION_SITES);//建造物
@@ -68,7 +68,7 @@ var builderInE36N58 = {//负责去E36N58建造
                 }
             }
         } else {
-            if (!roomE37N58){
+            if (!roomE37N58 || creep.room.name != 'E37N58'){
                 creep.moveTo(new RoomPosition(25,25,'E37N58'));
             }else{
                 var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{

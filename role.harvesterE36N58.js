@@ -4,8 +4,8 @@ var harvesterE36N58 = {//负责去E36N58
     run: function(creep) {
         const room = Game.rooms['E36N58']
         var sourceE36N58 = Game.getObjectById('5bbcaf089099fc012e63a030');
-        if (!room){
-            creep.moveTo(new RoomPosition(25,25,'E36N58'));
+        if (!room || creep.room.name != 'E36N58'){
+            creep.moveTo(new RoomPosition(48,10,'E36N58'));
         }else {
             if (creep.pos.x != 40 || creep.pos.y != 6){
                 creep.moveTo(40,6);

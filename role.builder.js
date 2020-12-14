@@ -40,7 +40,7 @@ var roleBuilder = {
 
             var nomalRampart = _.filter(neededRepairRampart,
                 function (rampart) {
-                    return rampart.hits/rampart.hitsMax < 0.05;
+                    return rampart.hits/rampart.hitsMax < 0.1;
                 });
             var neededRepairRoad = creep.room.find(FIND_STRUCTURES,{
                 filter: function(structure){
