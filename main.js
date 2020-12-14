@@ -146,7 +146,7 @@ module.exports.loop = function () {
     if (builderE36N58.length < 1){
         var name = 'builderE36N58'+Game.time;
         console.log('create new '+name);
-        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
             memory: {role: 'builderInE36N58'}
         });
     }
@@ -164,6 +164,7 @@ module.exports.loop = function () {
             memory: {role: 'carrierE36N58'}
         });
     }
+
 
     if(Game.spawns['Earth'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
@@ -204,6 +205,8 @@ module.exports.loop = function () {
             harvesterInE36N58.run(creep);
         }else if (creep.memory.role == 'claimerE36N58'){
             claimerInE36N58.run(creep);
+        }else if (creep.memory.role == 'helperE36N58'){
+            dismantler.run(creep);
         }
     }
 }

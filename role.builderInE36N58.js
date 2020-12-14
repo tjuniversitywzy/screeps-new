@@ -68,26 +68,33 @@ var builderInE36N58 = {//负责去E36N58建造
                 }
             }
         } else {
-            if (!roomE37N58 || creep.room.name != 'E37N58'){
-                creep.moveTo(new RoomPosition(25,25,'E37N58'));
-            }else{
-                var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
-                    filter: function(resource){
-                        return resource.amount > 150;
-                    }});//捡起来掉落的资源
-                var sources = creep.room.find(FIND_SOURCES);
-                if (dropedSources.length){
-                    if (creep.pickup(dropedSources[0]) == ERR_NOT_IN_RANGE){
-                        creep.moveTo(dropedSources[0]);
-                    }//先捡起来掉落的资源
+            var containerE36N58 = Game.getObjectById('5fd72ff93094fc1034c184dd');
+            if (containerE36N58.store[RESOURCE_ENERGY] > 200){
+                if (creep.withdraw(containerE36N58,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(containerE36N58);
                 }
-                else if (storage.store[RESOURCE_ENERGY] > 0){
-                    if (creep.withdraw(storage,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                        creep.moveTo(storage);
+            }else {
+                if (!roomE37N58 || creep.room.name != 'E37N58'){
+                    creep.moveTo(new RoomPosition(25,25,'E37N58'));
+                }else{
+                    var dropedSources = creep.room.find(FIND_DROPPED_RESOURCES,{
+                        filter: function(resource){
+                            return resource.amount > 150;
+                        }});//捡起来掉落的资源
+                    var sources = creep.room.find(FIND_SOURCES);
+                    if (dropedSources.length){
+                        if (creep.pickup(dropedSources[0]) == ERR_NOT_IN_RANGE){
+                            creep.moveTo(dropedSources[0]);
+                        }//先捡起来掉落的资源
                     }
-                }
-                else if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                    else if (storage.store[RESOURCE_ENERGY] > 0){
+                        if (creep.withdraw(storage,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                            creep.moveTo(storage);
+                        }
+                    }
+                    else if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                    }
                 }
             }
         }

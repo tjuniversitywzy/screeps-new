@@ -32,7 +32,7 @@ var E36N58ToE37N58Container_L = {
                 if (creep.transfer(containerE37N58_L,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                     creep.moveTo(containerE37N58_L);
                 }else{
-                    creep.moveTo(13,14);
+                    creep.moveTo(2,13);
                 }
             }
 
