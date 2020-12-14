@@ -60,7 +60,7 @@ module.exports.loop = function () {
         return creep.memory.role == 'wallRepairer';
     })
     var builderE36N58 = _.filter(Game.creeps,function (creep) {
-        return creep.memory.role == 'builderE36N58';
+        return creep.memory.role == 'builderInE36N58';
     })
 
     //如果harvester数量小于2，重新创建一个harvester
@@ -129,13 +129,13 @@ module.exports.loop = function () {
             memory: {role: 'wallRepairer'}
         });
     }
-    // if (builderE36N58.length < 1){
-    //     var name = 'builderE36N58'+Game.time;
-    //     console.log('create new '+name);
-    //     Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
-    //         memory: {role: 'builderInE36N58'}
-    //     });
-    // }
+    if (builderE36N58.length < 1){
+        var name = 'builderE36N58'+Game.time;
+        console.log('create new '+name);
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'builderInE36N58'}
+        });
+    }
 
     if(Game.spawns['Earth'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Earth'].spawning.name];
