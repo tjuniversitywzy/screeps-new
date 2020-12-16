@@ -2,7 +2,6 @@
 var roleStorageToUpgrader = {
     run: function (creep) {
         var storage = Game.getObjectById('5fd3221dd535200770e51e33');//左边的
-        var containerUpgrader = Game.getObjectById('5fce7bcbf0ce50b8f199afff');
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
@@ -39,11 +38,8 @@ var roleStorageToUpgrader = {
                 if(creep.transfer(neededEnergyTower[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(neededEnergyTower[0], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
-            }
-            else if (creep.transfer(containerUpgrader,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                creep.moveTo(containerUpgrader);
-            }else if (creep.transfer(containerUpgrader,RESOURCE_ENERGY) == ERR_FULL){
-                creep.moveTo(Game.flags.FlagCarrier);
+            }else {
+                creep.moveTo(24,12);
             }
         }
 
