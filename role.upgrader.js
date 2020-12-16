@@ -25,7 +25,7 @@ var roleUpgrader = {
                 creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         } else {
-            if (container3.store[RESOURCE_ENERGY] > 0) {
+            if (linkR.store[RESOURCE_ENERGY] > 0) {
                 if (creep.withdraw(linkR, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(linkR);
                 }

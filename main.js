@@ -18,8 +18,14 @@ module.exports.loop = function () {
 
     //塔，修复墙壁
     var tower = Game.getObjectById('5fd339d698c2cb1d46dbe49f');
-    var attackerTower = Game.getObjectById('5fd4d4b793ad71613d187582')
-
+    var attackerTower = Game.getObjectById('5fd4d4b793ad71613d187582');
+    var linkMB = Game.getObjectById('5fd60ed64f5d0610fb24de61');
+    console.log(linkMB.cooldown);
+    if (linkMB){
+        if(linkMB.store.getFreeCapacity(RESOURCE_ENERGY) < 300) {
+            linkMB.transferEnergy(Game.getObjectById('5fd622db3ae53676641b6442'));
+        }
+    }
     if(tower){
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: function(structure){
@@ -95,28 +101,28 @@ module.exports.loop = function () {
         });
     }
 
-    // if (harvester2.length < 1){
-    //     var name = 'harvester2';
-    //     // console.log('create'+name);
-    //     Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,MOVE,MOVE],name,{
-    //         memory: {role: 'harvester2'}
-    //     });
-    // }
+    if (harvester2.length < 1){
+        var name = 'harvester2';
+        // console.log('create'+name);
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,MOVE,MOVE],name,{
+            memory: {role: 'harvester2'}
+        });
+    }
 
-    if (builder.length < 2){
+    if (builder.length < 1){
         var name = 'builder'+Game.time;
         console.log('create new builder'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
             memory: {role: 'builder'}
         });
     }
-    // if (upGrader.length < 2){
-    //     var name = 'upgrader'+Game.time;
-    //     console.log('create new '+name);
-    //     Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
-    //         memory: {role: 'upgrader'}
-    //     });//800
-    // }
+    if (upGrader.length < 3){
+        var name = 'upgrader'+Game.time;
+        console.log('create new '+name);
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
+            memory: {role: 'upgrader'}
+        });//800
+    }
     if (carrierMine1ToStorage.length < 1){
         var name = 'carrierMine1ToStorage'+Game.time;
         console.log('create new '+name);
@@ -124,13 +130,13 @@ module.exports.loop = function () {
             memory: {role: 'Mine1ToStorage'}
         });
     }
-    // if (carrierMine2ToStorage.length < 1){
-    //     var name = 'carrierMine2ToStorage'+Game.time;
-    //     console.log('create new '+name);
-    //     Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
-    //         memory: {role: 'Mine2ToStorage'}
-    //     });
-    // }
+    if (carrierMine2ToStorage.length < 1){
+        var name = 'carrierMine2ToStorage'+Game.time;
+        console.log('create new '+name);
+        Game.spawns['Earth'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],name,{
+            memory: {role: 'Mine2ToStorage'}
+        });
+    }
     if (carrierStorageToUpgrader.length < 1){
         var name = 'carrierStorageToUpgrader'+Game.time;
         console.log('create new grader'+name);
@@ -192,7 +198,7 @@ module.exports.loop = function () {
         }else if (creep.memory.role == 'Mine1ToStorage'){
             Mine1ToStorage.run(creep);
         }else if (creep.memory.role == 'Mine2ToStorage'){
-            // Mine2ToStorage.run(creep);
+            Mine2ToStorage.run(creep);
         }else if (creep.memory.role == 'StorageToUpgrader'){
             StorageToUpgrader.run(creep);
         }else if (creep.memory.role == 'wallRepairer'){
