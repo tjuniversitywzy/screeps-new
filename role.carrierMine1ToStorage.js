@@ -1,7 +1,7 @@
 //负责把container的能量搬运到中心storage
 var Mine1ToStorage = {
     run: function (creep) {
-        var container1 = Game.getObjectById('5fd0d52e83f4c657b6dbc698');//左边的
+        var container1 = Game.getObjectById('5fda1133d0970b7de3a73951');//左边的
         var storage = Game.getObjectById('5fd3221dd535200770e51e33');//一个目标storage
         if(creep.memory.carrying && creep.store[RESOURCE_ENERGY] == 0){
             creep.memory.carrying = false;

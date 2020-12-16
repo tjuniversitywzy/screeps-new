@@ -5,11 +5,14 @@ var roleStorageToUpgrader = {
         var containerUpgrader = Game.getObjectById('5fce7bcbf0ce50b8f199afff');
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN || structure.structureType == STRUCTURE_TOWER) &&
+                return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
             }
         });//存储单位
-
+        var towers = [Game.getObjectById('5fd4d4b793ad71613d187582'),Game.getObjectById('5fd339d698c2cb1d46dbe49f')];
+        var neededEnergyTower = _.filter(towers,function (tower) {
+            return tower.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        })
         if(creep.memory.carrying && creep.store[RESOURCE_ENERGY] == 0){
             creep.memory.carrying = false;
             creep.say("开始寻找能源");
@@ -31,7 +34,13 @@ var roleStorageToUpgrader = {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
-            }else if (creep.transfer(containerUpgrader,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+            }
+            else if (neededEnergyTower.length > 0){
+                if(creep.transfer(neededEnergyTower[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(neededEnergyTower[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                }
+            }
+            else if (creep.transfer(containerUpgrader,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(containerUpgrader);
             }else if (creep.transfer(containerUpgrader,RESOURCE_ENERGY) == ERR_FULL){
                 creep.moveTo(Game.flags.FlagCarrier);

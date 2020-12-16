@@ -10,7 +10,7 @@ var roleUpgrader = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
-        var container3 = Game.getObjectById('5fce7bcbf0ce50b8f199afff');//一个目标container
+        var linkR = Game.getObjectById('5fd622db3ae53676641b6442');//升级室旁边的link
         if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.upgrading = false;
             creep.say('🔄 收集能量');
@@ -26,8 +26,8 @@ var roleUpgrader = {
             }
         } else {
             if (container3.store[RESOURCE_ENERGY] > 0) {
-                if (creep.withdraw(container3, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(container3);
+                if (creep.withdraw(linkR, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(linkR);
                 }
             }else {
                 creep.moveTo(Game.flags.FlagUpGrader);
