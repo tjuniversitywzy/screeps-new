@@ -144,7 +144,7 @@ module.exports.loop = function () {
             memory: {role: 'StorageToUpgrader'}
         });
     }
-    if (wallRepair.length < 1){
+    if (wallRepair.length < 2){
         var name = 'wallRepair'+Game.time;
         console.log('create new wallRepairer'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{

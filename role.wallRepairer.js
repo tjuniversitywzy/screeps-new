@@ -49,7 +49,7 @@ var roleWallRepairer = {
                 Game.getObjectById('5fd475707c25771b7fef5e32'),
             ]
             var firstRepaired = _.filter(neededRepairWalls,function (wall) {
-                return wall.hits/wall.hitsMax < 0.0025;
+                return wall.hits/wall.hitsMax < 0.005;
             });
             // console.log(neededRepairBuildings.length);
             // creep.moveTo(Game.flags.Flag2, {visualizePathStyle: {stroke: '#ffffff'}});
