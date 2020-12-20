@@ -17,31 +17,34 @@ var claimerInE36N58 = require('role.claimerE36N58');
 module.exports.loop = function () {
 
     //塔，修复墙壁
-    var tower = Game.getObjectById('5fd339d698c2cb1d46dbe49f');
+    var towers = [Game.getObjectById('5fd339d698c2cb1d46dbe49f'),Game.getObjectById('5fd4d4b793ad71613d187582')];
     var attackerTower = Game.getObjectById('5fd4d4b793ad71613d187582');
     var linkMB = Game.getObjectById('5fd60ed64f5d0610fb24de61');
-    console.log(linkMB.cooldown);
+    // console.log(linkMB.cooldown);
     if (linkMB){
         if(linkMB.store.getFreeCapacity(RESOURCE_ENERGY) < 300) {
             linkMB.transferEnergy(Game.getObjectById('5fd622db3ae53676641b6442'));
         }
     }
-    if(tower){
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: function(structure){
-                return structure.hits < structure.hitsMax && structure.structureType == 'road';
-            }
-        });
-        if(closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
-    }
 
-    //塔，自动攻击
+    //塔，自动索敌
     if(attackerTower) {
         var closestHostile = attackerTower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if(closestHostile) {
-            attackerTower.attack(closestHostile);
+        if(closestHostile) {//如果发现了敌人
+            for (var tower in towers){
+                tower.attack(closestHostile);
+            }
+        }else {//如果没有发现敌人，就修路去
+            if(towers.length){
+                var closestDamagedStructure = towers[0].pos.findClosestByRange(FIND_STRUCTURES, {
+                    filter: function(structure){
+                        return structure.hits < structure.hitsMax && structure.structureType == 'road';
+                    }
+                });
+                if(closestDamagedStructure) {
+                    towers[0].repair(closestDamagedStructure);
+                }
+            }
         }
     }
 
@@ -109,10 +112,10 @@ module.exports.loop = function () {
         });
     }
 
-    if (builder.length < 1){
+    if (builder.length < 2){
         var name = 'builder'+Game.time;
         console.log('create new builder'+name);
-        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
+        Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],name,{
             memory: {role: 'builder'}
         });
     }
@@ -144,7 +147,7 @@ module.exports.loop = function () {
             memory: {role: 'StorageToUpgrader'}
         });
     }
-    if (wallRepair.length < 1){
+    if (wallRepair.length < 2){
         var name = 'wallRepair'+Game.time;
         console.log('create new wallRepairer'+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],name,{
