@@ -31,16 +31,18 @@ module.exports.loop = function () {
     if(attackerTower) {
         var closestHostile = attackerTower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if(closestHostile) {//如果发现了敌人
-            for (var tower in towers){
-                tower.attack(closestHostile);
+            for (var i = 0;i < towers.length;i++){
+                towers[i].attack(closestHostile);
             }
         }else {//如果没有发现敌人，就修路去
             if(towers.length){
+
                 var closestDamagedStructure = towers[0].pos.findClosestByRange(FIND_STRUCTURES, {
                     filter: function(structure){
                         return structure.hits < structure.hitsMax && structure.structureType == 'road';
                     }
                 });
+
                 if(closestDamagedStructure) {
                     towers[0].repair(closestDamagedStructure);
                 }
@@ -119,7 +121,7 @@ module.exports.loop = function () {
             memory: {role: 'builder'}
         });
     }
-    if (upGrader.length < 3){
+    if (upGrader.length < 2){
         var name = 'upgrader'+Game.time;
         console.log('create new '+name);
         Game.spawns['Earth'].spawnCreep([WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE],name,{
