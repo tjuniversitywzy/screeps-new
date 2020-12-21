@@ -47,6 +47,20 @@ var roleWallRepairer = {
                 Game.getObjectById('5fd47578e985fa959c8cffb6'),
                 Game.getObjectById('5fd47574f730aa68e0cf0a54'),
                 Game.getObjectById('5fd475707c25771b7fef5e32'),
+                //新增
+                Game.getObjectById('5fc9cd6d8265acd80ed5bd6e'),
+                Game.getObjectById('5fc9b49f0ebbfabe62e526f7'),
+                Game.getObjectById('5fc9b4acf758396fcd5d463e'),
+                Game.getObjectById('5fc9b4a9953e9243e11f1a2d'),
+                Game.getObjectById('5fc9b4b2d9cf943ac3a4d11b'),
+                Game.getObjectById('5fc9b4bed1f58fbaac04f3ae'),
+                Game.getObjectById('5fc9b4bbca67bad920e1db7e'),
+                Game.getObjectById('5fc9cd93ca67bafa31e1e342'),
+                Game.getObjectById('5fc9a26973fae9851b60fb74'),
+                Game.getObjectById('5fc9b4e1135450c31d639b27'),
+                Game.getObjectById('5fc9b4e43e753491d2cf36e7'),
+                Game.getObjectById('5fc9b4ebab39dc39a7a16374'),
+                Game.getObjectById('5fc9b4f1ef3852710f744c0c'),
             ]
             var firstRepaired = _.filter(neededRepairWalls,function (wall) {
                 return wall.hits/wall.hitsMax < 0.005;
